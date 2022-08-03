@@ -1,0 +1,153 @@
+@use 'variables';
+@use 'initial';
+@use 'mixins';
+
+.main-container{
+    width: 375px;
+    min-height: 100vh;
+    margin: auto;
+
+    @include mixins.desktop-view;
+    
+}
+
+.header{
+    height: 300px;
+    background: {
+        image: url('../images/pattern-bg.png');
+        position: top;
+        
+        clip: border-box;
+        
+    }
+
+    @include mixins.desktop-view(1440px, 275px);
+    
+    &__title{
+        color: variables.$White;
+        text-align: center;
+        font-size: 1.3em;
+        font-weight: 400;
+        padding: 30px 0;
+        @include mixins.desktop-view(auto, auto, 1.9em);
+    }
+
+    &-search-content{
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        width: 327px;
+        border-radius: 1em;
+        overflow: hidden;
+        
+
+        @include mixins.desktop-view(550px, 60px);
+        
+    
+        .header__input{
+            border: none;
+            width: 265px;
+            font-size: 1em;
+            height: 55px;
+            padding: 0 20px;
+            font-family: variables.$Font;
+            @include mixins.desktop-view(495px, 60px, 1.15em);
+
+            &:focus{
+                outline: none;
+            }
+        }
+
+        .header__button{
+            width: 60px;
+            height: 55px;
+            background: variables.$Black;
+            @include mixins.desktop-view(60px, 60px);
+            cursor: pointer;
+
+            &:hover{
+                background: variables.$Very-Dark-Gray;
+            }
+        }
+    }
+}
+
+.result-container{
+    position: relative;
+}
+
+.section-location{
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    width: 325px;
+    padding: 20px 40px;
+    gap: 12px;
+    background: variables.$White;
+    position: absolute;
+    z-index: 100;
+
+    top: -130px;
+
+    left: 50%;
+    transform: translate(-50%,0);
+
+    @include mixins.desktop-view(1100px, 155px);
+
+    div{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        h2{
+            text-align: center;
+            font-size: .7em;
+            letter-spacing: 2px;
+            color: variables.$Dark-Gray;
+        }
+    
+        p{
+            text-align: center;
+            font-weight: 500;
+            font-size: 1.2em;
+        }
+    }
+    
+}
+
+
+@media (min-width: 1440px){
+    .section-location{
+        flex-direction: row;
+        top: -75px;
+        padding: 30px;
+        div{
+             flex-grow: 1;
+            h2{
+                text-align: start;
+                font-size: .8em;
+            }
+
+            p{
+                font-size: 1.4em;
+                text-align: start;
+            }
+        }
+        .divider{
+            width: 1px;
+            margin: 10px 25px;
+            background: #ccc;
+        }
+    }
+}
+
+
+.leaflet-container{
+    width: 375px;
+    height: calc(100vh - 300px);
+    position: relative;
+    z-index: 1;
+
+    @include mixins.desktop-view(1440px, calc(100vh - 275px));
+}
