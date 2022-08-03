@@ -1,11 +1,10 @@
-import React, {useEffect } from 'react';
+import React, {useEffect, useState } from 'react';
 
 import { 
     MapContainer,
     TileLayer,
     Marker,
     Popup,
-    useMap
 } from 'react-leaflet';
 
 export default function Map({ locat }) {
@@ -14,31 +13,36 @@ export default function Map({ locat }) {
         lng: locat.location.lng
     }
 
+    const [map, setMap] = useState(null);
+
     return (
         <MapContainer
             center={center}
             zoom={16}
-            scrollWheelZoom={false}>
+            scrollWheelZoom={false}
+            ref={setMap}
+            >
+            
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <LocationMarker position={center} />
+            <LocationMarker position={center}  map={map}/>
         </MapContainer>
     )
 
 }
 
 
-function LocationMarker({position}) {
-    const map = useMap();
-
+function LocationMarker({position, map}) {
     useEffect(()=>{
-        map.flyTo(position, map.getZoom());
-    }, [position])
+        if(map!==null){
+            map.flyTo(position, map.getZoom())
+        }
+        
+    }, [position, map]);
     
-
-    return (
+      return (
         <Marker position={position}>
             <Popup>You are here</Popup>
         </Marker>
